@@ -66,8 +66,7 @@ const AddTaskForm = ({ onAddTask }) => {
         type="submit"
         className="bg-green-500 text-white rounded-md p-2 w-full md:w-32"
       >
-        Add Task
-      </button>
+        Add      </button>
     </form>
   );
 };
