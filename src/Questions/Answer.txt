@@ -1,0 +1,49 @@
+1. How did you handle inline editing in the table?
+The provided code does not explicitly include inline editing functionality in the task table. However, to implement inline editing:
+
+A state could be maintained for the task being edited (e.g., editingTaskId).
+The editable fields (e.g., title, description, status) could render as input or select elements when a task is in edit mode.
+Changes can be saved by updating the corresponding task in the tasks array state.
+
+2. Explain how you fetched and processed the data from the dummy API.
+Fetching Data: Data is fetched using axios from the JSONPlaceholder API (https://jsonplaceholder.typicode.com/todos) in the TaskTable component within a useEffect hook.
+Processing Data:
+The first 20 tasks are sliced (res.data.slice(0, 20)).
+Each task is mapped to include only relevant fields: id, title, description, and status.
+The status field is derived from the completed property, setting it to either Done or To Do.
+
+3. What approach did you use to filter tasks based on status?
+Filter Logic:
+
+The filterStatus state determines the filter criteria (All, To Do, In Progress, Done).
+Tasks are filtered using Array.filter():
+javascript
+(filterStatus === 'All' || task.status === filterStatus)
+This condition allows all tasks when the filter is set to All, or filters tasks with a matching status.
+Additionally, tasks are filtered based on the search query by checking if title or description includes the search term (case-insensitive).
+
+4. How did you manage the state of tasks when adding or editing them?
+Adding Tasks:
+
+In the TaskTable and TaskManager components, a new task is added by updating the tasks state using:
+javascript
+setTasks((prev) => [...prev, newTask]);
+The new task is created with a unique id (using Date.now() or incrementing lastId), along with title, description, and status.
+Editing Tasks:
+
+Inline editing is not implemented in the code, but it could be managed by:
+Using a separate editingTask state to hold temporary edits.
+Updating the tasks array by mapping through and replacing the edited task.
+5. What challenges did you face during development, and how did you overcome them?
+Challenge 1: Validation and User Feedback
+
+Solution: Validation is handled for the task title, and react-toastify is used to provide user feedback (e.g., error messages and success notifications).
+Challenge 2: Initial Data Transformation
+
+Solution: While fetching data from the dummy API, tasks were transformed to match the expected structure by mapping id, title, description, and status.
+Challenge 3: Filtering with Multiple Criteria
+
+Solution: Combined status filtering and search query filtering into a single Array.filter() function for simplicity and efficiency.
+Challenge 4: User Confirmation for Empty Descriptions
+
+Solution: Added a window.confirm dialog to prompt the user before allowing a task with an empty description to be added.
